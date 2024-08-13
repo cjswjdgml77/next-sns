@@ -62,10 +62,11 @@ const MessagePage = async ({ searchParams }: Props) => {
       update public."userToChatroom" set unread = 0  WHERE "id" = ${selectedRoom.userToChatroomId}
     `);
   }
+  console.log(chatroom);
   return (
     <section className="flex border-l-[1px]">
       <ChatUsersLayout
-        chatrooms={chatroom}
+        chatrooms={JSON.parse(JSON.stringify(chatroom))}
         selectedId={selectedRoom?.id}
         session={session}
       />
