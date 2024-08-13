@@ -1,0 +1,1 @@
+ALTER TABLE "userToChatroom" ADD COLUMN "createdAt" timestamp DEFAULT now();

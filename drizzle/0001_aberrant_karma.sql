@@ -1,0 +1,1 @@
+ALTER TABLE "chatroom" ADD COLUMN "roomId" varchar(50) NOT NULL;

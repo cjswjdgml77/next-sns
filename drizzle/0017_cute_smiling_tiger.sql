@@ -1,0 +1,1 @@
+ALTER TABLE "userToChatroom" ADD COLUMN "isGroup" boolean;

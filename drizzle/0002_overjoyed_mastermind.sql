@@ -1,0 +1,1 @@
+ALTER TABLE "chatroom" DROP COLUMN IF EXISTS "roomId";

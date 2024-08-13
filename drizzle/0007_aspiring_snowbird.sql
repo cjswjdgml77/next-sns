@@ -1,0 +1,1 @@
+ALTER TABLE "chatroom" ALTER COLUMN "lastMessageTime" SET DATA TYPE timestamp with time zone;
