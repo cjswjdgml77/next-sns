@@ -64,7 +64,7 @@ const MessagePage = async ({ searchParams }: Props) => {
       update public."userToChatroom" set unread = 0  WHERE "id" = ${selectedRoom.userToChatroomId}
     `);
   }
-
+  console.log(selectedRoom, chatroom);
   return (
     <section className="flex border-l-[1px]">
       <ChatUsersLayout
