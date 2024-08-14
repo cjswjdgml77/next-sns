@@ -28,7 +28,7 @@ export interface IChatroomWithUsers extends IChatroom {
 const MessagePage = async ({ searchParams }: Props) => {
   const session = await auth();
   if (!session) redirect("/auth/login");
-  const chatroom = (await db.execute(sql`
+  let chatroom = (await db.execute(sql`
   select 
     new1."id", new1."lastMessage",new1."unread",
     new1."unread",new1."isActive", new1."isGroup",
@@ -54,6 +54,8 @@ const MessagePage = async ({ searchParams }: Props) => {
     
   `)) as unknown as IChatroomWithUsers[];
 
+  chatroom = JSON.parse(JSON.stringify(chatroom));
+
   let selectedRoom;
   if (searchParams.room && searchParams.ownroom) {
     selectedRoom = chatroom.filter((room) => room.id === searchParams.room)[0];
@@ -62,7 +64,7 @@ const MessagePage = async ({ searchParams }: Props) => {
       update public."userToChatroom" set unread = 0  WHERE "id" = ${selectedRoom.userToChatroomId}
     `);
   }
-  console.log(chatroom);
+
   return (
     <section className="flex border-l-[1px]">
       <ChatUsersLayout
