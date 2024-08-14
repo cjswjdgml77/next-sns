@@ -52,23 +52,29 @@ const MessagePage = async ({ searchParams }: Props) => {
       group by uc."chatroomId") d left join public."chatroom" as "c" on  c."id" = d."chatroomId"
     ) new2 on new1."id"= new2."chatroomId" order by new1."charoomCreatedAt" asc ;
     
-  `)) as unknown as IChatroomWithUsers[];
+  `)) as any;
 
-  chatroom = JSON.parse(JSON.stringify(chatroom));
+  if (process.env.NODE_ENV === "production") {
+    chatroom = chatroom.rows as IChatroomWithUsers[];
+  }
 
   let selectedRoom;
   if (searchParams.room && searchParams.ownroom) {
-    selectedRoom = chatroom.filter((room) => room.id === searchParams.room)[0];
-    // await db.select().from(usersToChatrooms).where(and(eq(usersToChatrooms.userId, session.user?.id!),eq(usersToChatrooms.chatroomId,)))
+    selectedRoom = chatroom.filter(
+      (room: IChatroomWithUsers) => room.id === searchParams.room
+    )[0];
     await db.execute(sql`
       update public."userToChatroom" set unread = 0  WHERE "id" = ${selectedRoom.userToChatroomId}
     `);
   }
-  console.log(selectedRoom, chatroom);
+  for (const [key, value] of chatroom.entries()) {
+    console.log(key, value);
+  }
+
   return (
     <section className="flex border-l-[1px]">
       <ChatUsersLayout
-        chatrooms={JSON.parse(JSON.stringify(chatroom))}
+        chatrooms={chatroom}
         selectedId={selectedRoom?.id}
         session={session}
       />
