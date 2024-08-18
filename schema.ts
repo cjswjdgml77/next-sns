@@ -21,16 +21,16 @@ import type { AdapterAccountType } from "next-auth/adapters";
 
 const connectionString = process.env.POSTGRES_URL!;
 const pool = postgres(connectionString, { max: 1 });
-let db:
-  | PostgresJsDatabase<Record<string, never>>
-  | VercelPgDatabase<Record<string, never>>;
-if (process.env.NODE_ENV !== "production") {
-  db = drizzle(pool);
-} else {
-  db = drizzleVercel(sql);
-}
-export { db };
-// export const db = drizzle(pool);
+// let db:
+//   | PostgresJsDatabase<Record<string, never>>
+//   | VercelPgDatabase<Record<string, never>>;
+// if (process.env.NODE_ENV !== "production") {
+//   db = drizzle(pool);
+// } else {
+//   db = drizzleVercel(sql);
+// }
+// export { db };
+export const db = drizzle(pool);
 
 export const users = pgTable("user", {
   id: text("id")
