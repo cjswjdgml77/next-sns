@@ -54,9 +54,9 @@ const MessagePage = async ({ searchParams }: Props) => {
     
   `)) as any;
 
-  if (process.env.NODE_ENV === "production") {
-    chatroom = chatroom.rows as IChatroomWithUsers[];
-  }
+  // if (process.env.NODE_ENV === "production") {
+  //   chatroom = chatroom.rows as IChatroomWithUsers[];
+  // }
 
   let selectedRoom;
   if (searchParams.room && searchParams.ownroom) {
@@ -67,9 +67,9 @@ const MessagePage = async ({ searchParams }: Props) => {
       update public."userToChatroom" set unread = 0  WHERE "id" = ${selectedRoom.userToChatroomId}
     `);
   }
-  for (const [key, value] of chatroom.entries()) {
-    console.log(key, value);
-  }
+  // for (const [key, value] of chatroom.entries()) {
+  //   console.log(key, value);
+  // }
 
   return (
     <section className="flex border-l-[1px]">
